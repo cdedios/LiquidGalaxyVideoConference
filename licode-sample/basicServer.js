@@ -56,11 +56,11 @@ N.API.getRooms(function(roomlist) {
     }
 });
 
-app.get('/touchscreen/', function(req, res) {
+app.get('/touchscreen', function(req, res) {
     res.render("touchscreen.html");
 });
 
-app.get('/lg/', function(req, res) {
+app.get('/lg', function(req, res) {
     res.render("lg.html"); 
 });
 

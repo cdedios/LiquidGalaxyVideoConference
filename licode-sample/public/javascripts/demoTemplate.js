@@ -74,7 +74,7 @@ window.onload = function () {
     }
 
     DEMO.remove_chat_participant = function(name) {
-        add_text_to_chat('Participant: ' + name + ' removed', 'italic');
+        add_text_to_chat('Participant: ' + name + ' has disconnected', 'italic');
     }
 
     DEMO.send_chat_message = function() {

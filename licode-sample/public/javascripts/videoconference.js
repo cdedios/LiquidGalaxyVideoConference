@@ -1,10 +1,10 @@
-var localStream, room;
+var localStream, room, role;
 
 DEMO.init_demo = function (my_name) {
 
   // var screen = getParameterByName("screen");
   var screen = "";
-  var role = "";
+  role = "";
   localStream = function () {
     var pathArray = window.location.pathname.split( '/' )[1];
     console.log(pathArray);
@@ -20,6 +20,11 @@ DEMO.init_demo = function (my_name) {
       return Erizo.Stream({audio: true, video: true, data: true, screen: screen, attributes: {name: my_name, role: role}});
     }
   }();
+
+  
+
+    
+  
   
   DEMO.chat_stream = localStream;
   
@@ -158,5 +163,22 @@ var resizeGrid = function() {
                 grid.childNodes[i].setAttribute("style", "width: " + width + "%; height: " + height + "%;");
             }
         }
+    }
+    if(role == "lg"){
+      var element = document.getElementById('video_grid');
+      //document.getElementById('video_grid').setAttribute("style","height:100%");
+      //document.getElementById('video_grid').setAttribute("style","weight:100%");
+      console.log("VideoGrid Found, now try to go fullscreen");
+      // Supports most browsers and their versions.
+      var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+
+      if (requestMethod) { // Native full screen.
+          //requestMethod.call(element);
+      } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
+          var wscript = new ActiveXObject("WScript.Shell");
+          if (wscript !== null) {
+              wscript.SendKeys("{F11}");
+          }
+      }
     }
 } 
