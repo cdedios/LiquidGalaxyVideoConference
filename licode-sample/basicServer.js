@@ -4,10 +4,11 @@ var express = require('express'),
     errorhandler = require('errorhandler'),
     morgan = require('morgan'),
     net = require('net'),
+    // jade = require('jade'),
     N = require('./nuve'),
     fs = require("fs"),
     https = require("https"),
-        config = require('./../../licode_config');
+    config = require('./../../licode_config');
 
 var options = {
     key: fs.readFileSync('cert/key.pem').toString(),
@@ -24,13 +25,15 @@ app.use(errorhandler({
 }));
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/public'));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-//app.set('views', __dirname + '/../views/');
+app.engine('html', require('jade').renderFile);
+//app.set("view engine", "jade");
+//app.register('.html', require('jade'));
+app.set('views', __dirname + '/public/');
 //disable layout
 //app.set("view options", {layout: false});
 
@@ -53,6 +56,13 @@ N.API.getRooms(function(roomlist) {
     }
 });
 
+app.get('/touchscreen/', function(req, res) {
+    res.render("touchscreen.html");
+});
+
+app.get('/lg/', function(req, res) {
+    res.render("lg.html"); 
+});
 
 app.get('/getRooms/', function(req, res) {
     "use strict";

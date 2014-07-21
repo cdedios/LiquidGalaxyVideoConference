@@ -73,6 +73,10 @@ window.onload = function () {
         add_text_to_chat('New participant: ' + name, 'italic');
     }
 
+    DEMO.remove_chat_participant = function(name) {
+        add_text_to_chat('Participant: ' + name + ' removed', 'italic');
+    }
+
     DEMO.send_chat_message = function() {
         if(messText.value.match (/\S/)) {
             if (DEMO.chat_stream) {

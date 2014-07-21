@@ -4,10 +4,26 @@ DEMO.init_demo = function (my_name) {
 
   // var screen = getParameterByName("screen");
   var screen = "";
-  localStream = Erizo.Stream({audio: true, video: true, data: true, screen: screen, attributes: {name: my_name}});
+  var role = "";
+  localStream = function () {
+    var pathArray = window.location.pathname.split( '/' )[1];
+    console.log(pathArray);
+
+    if (pathArray == "touchscreen"){
+      role = "touchscreen";
+      return Erizo.Stream({audio: true, video: true, data: true, screen: screen, attributes: {name: my_name, role: role}});
+    }else if(pathArray == "lg"){
+      role = "lg";
+      return Erizo.Stream({audio: false, video: false, data: false, screen: screen, attributes: {name: my_name, role: role}});  
+    }else{
+      role = "client";
+      return Erizo.Stream({audio: true, video: true, data: true, screen: screen, attributes: {name: my_name, role: role}});
+    }
+  }();
+  
   DEMO.chat_stream = localStream;
   
-  DEMO.create_token("user", "presenter", function (response) {
+  DEMO.create_token(my_name, "presenter", function (response) {
     var token = response;
     console.log(token);
     room = Erizo.Room({token: token});
@@ -23,20 +39,30 @@ DEMO.init_demo = function (my_name) {
       };
 
       room.addEventListener("room-connected", function (roomEvent) {
-        DEMO.connect_to_chat();
-        console.log('vopy a pub');
-        room.publish(localStream);
+        //If the endpoint is a touchscreen or a client connect to chat and publish your localStream
+        if(role == "client" || role == "touchscreen"){
+          DEMO.connect_to_chat();
+          room.publish(localStream);
+          //room.publish(localStream, {maxVideoBW: 300});
+        }        
         subscribeToStreams(roomEvent.streams);
       });
 
       room.addEventListener("stream-subscribed", function(streamEvent) {
         var stream = streamEvent.stream;
+        var stream_role = stream.getAttributes().role;
 
-        add_div_to_grid("test" + stream.getID())
-        stream.show("test" + stream.getID());
-
-        stream.addEventListener("stream-data", DEMO.chat_message_received);
-        DEMO.add_chat_participant(stream.getAttributes().name);
+        console.log("STREAM: "+stream.getID);
+        console.log("attributes "+stream.getAttributes());
+      
+        if((role == "client" || role == "lg") && stream_role == "client"){
+           add_div_to_grid("test" + stream.getID())
+           stream.show("test" + stream.getID());
+        }        
+        if (role =="client" || role == "touchscreen"){
+          stream.addEventListener("stream-data", DEMO.chat_message_received);
+          DEMO.add_chat_participant(stream.getAttributes().name);
+        }
 
       });
 
@@ -49,16 +75,23 @@ DEMO.init_demo = function (my_name) {
       room.addEventListener("stream-removed", function (streamEvent) {
         // Remove stream from DOM
         var stream = streamEvent.stream;
-        if (stream.elementID !== undefined) {
+        if (stream.elementID !== undefined && (role == "client" || role == "lg")) {
           remove_div_from_grid(stream.elementID, "video_grid");
         }
+        if(role == "client" || role == "touchscreen"){
+          //Send mssage stream removed
+          DEMO.remove_chat_participant(stream.getAttributes().name);
+        }
+        
       });
 
       room.connect();
 
-      add_div_to_grid("localVideo");
-      localStream.show("localVideo");
-
+      if (role == "client" ){ //only show our local stream if we are a normal client, this will be discussed
+        add_div_to_grid("localVideo");
+        localStream.show("localVideo");   
+      }
+      
     });
     localStream.init();
   });
