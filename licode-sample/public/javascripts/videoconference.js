@@ -60,7 +60,7 @@ DEMO.init_demo = function (my_name) {
         console.log("STREAM: "+stream.getID);
         console.log("attributes "+stream.getAttributes());
       
-        if((role == "client" || role == "lg") && stream_role == "client"){
+        if((role == "client" || role == "lg") && (stream_role == "client"|| stream_role == "touchscreen")){
            add_div_to_grid("test" + stream.getID())
            stream.show("test" + stream.getID());
         }        
