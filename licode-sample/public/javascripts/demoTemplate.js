@@ -42,8 +42,6 @@ window.onload = function () {
         var messText = document.getElementById('chat_message');
         var chat_body = document.getElementById('chat_body');
 
-        var my_name;
-
         DEMO.close = function () {
             window.location.href = '/';
         }

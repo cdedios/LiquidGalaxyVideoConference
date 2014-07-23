@@ -128,6 +128,23 @@ var remove_div_from_grid = function(divId) {
 }
 
 var resizeGrid = function() {
+    if(role == "lg"){
+      var element = document.getElementById('video_grid');
+      //document.getElementById('video_grid').setAttribute("style","height:100%");
+      //document.getElementById('video_grid').setAttribute("style","weight:100%");
+      console.log("VideoGrid Found, now try to go fullscreen");
+      // Supports most browsers and their versions.
+      var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+
+      if (requestMethod) { // Native full screen.
+          //requestMethod.call(element);
+      } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
+          var wscript = new ActiveXObject("WScript.Shell");
+          if (wscript !== null) {
+              wscript.SendKeys("{F11}");
+          }
+      }
+    }
 
     var grid = document.getElementById('video_grid');
     var nChilds = grid.childElementCount;
@@ -164,21 +181,5 @@ var resizeGrid = function() {
             }
         }
     }
-    if(role == "lg"){
-      var element = document.getElementById('video_grid');
-      //document.getElementById('video_grid').setAttribute("style","height:100%");
-      //document.getElementById('video_grid').setAttribute("style","weight:100%");
-      console.log("VideoGrid Found, now try to go fullscreen");
-      // Supports most browsers and their versions.
-      var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
-
-      if (requestMethod) { // Native full screen.
-          //requestMethod.call(element);
-      } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
-          var wscript = new ActiveXObject("WScript.Shell");
-          if (wscript !== null) {
-              wscript.SendKeys("{F11}");
-          }
-      }
-    }
+    
 } 
