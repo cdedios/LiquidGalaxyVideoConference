@@ -15,11 +15,10 @@ We investigated the actual situation related to open source projects and WebRTC 
 In this section you will find the description of the project structure; we will explain a little bit about the WebRTC technology and the Licode Project, how they work and give some examples. Later on we will discuss the main issues that we faced while we implemented
 our solution and concluding we will mention the part that we found more interesting.
 
-## 4.1 General Structure
+## General Structure
 In the next two points we will describe the 2 main projects that our solution is based on:
 WebRTC and Licode.
-### 4.1.1 WebRTC
-Figure 4.1: WebRTC logo
+### WebRTC
 WebRTC is a free, open project that enables web browsers with Real-Time Communications (RTC) capabilities via simple JavaScript APIs and HTML5. The WebRTC components have been optimized to serve better this purpose. It's supported by Google, Mozilla and Opera. Historically, RTC has been complex, requiring expensive audio and video technologies to be licensed or developed by yourself. Integrating RTC technology with existing content, data and services has been difficult and time consuming, particularly on the web. In May 2011, Ericsson built the first implementation of WebRTC.
 
 WebRTC implements open standards for real-time, plugin-free video, audio and data communication:
@@ -41,13 +40,11 @@ streaming data:
 * RTCPeerConnection: audio or video calling, with facilities for encryption and bandwidth management.
 * RTCDataChannel: peer-to-peer communication of generic data.
 
-### 4.1.2 Licode Project
-Figure 4.2: Licode logo
+### Licode Project
 The Licode project is an Open Source project that allows us to include real-time communications like streaming or videoconference on our web application in a very easy and fast way. Is based on WebRTC technologies and 100% compatible with latest stable versions of Google Chrome. Users are able to talk from their web browsers with no need to installing anything.
-On the Figure 4.1.2.1 we can how it looks like the structure of a Licode application.
-Figure 4.1.2.1: Licode Structure
+On the Figure we can how it looks like the structure of a Licode application.
 
-Based on the Figure 4.1.2.1 we will introduce the main elements:
+Based on the Figure we will introduce the main elements:
 
 **Clients:** Clients are JavaScript applications that run on browsers. Users will be able to access Licode rooms by using these clients. When connecting to a room a client needs the access token that is usually taken by server applications. You could implement
 videoconference rooms, chat, synchronization mechanisms, VoIP applications, and so on. Clients talk to Erizo Controller through Erizo client, which is part of this project.
