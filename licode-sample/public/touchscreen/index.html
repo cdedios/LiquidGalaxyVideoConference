@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Liquid Galaxy Video Conference</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="@dedios_carlos">
+
+		<!-- CSS -->
+		<link href="../css/bootstrap.css" rel="stylesheet">
+		<link href="../css/bootstrap-responsive.css" rel="stylesheet">
+		<link href="../css/docs.css" rel="stylesheet">
+		<link href="../css/prettify.css" rel="stylesheet">
+		<link href='../css/demoTemplate.css' rel='stylesheet'/>
+		<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+		<!-- Jajascripts -->
+		<script src="../licode_assets/js/jquery.js"></script>
+		<script src="../licode_assets/js/prettify.js"></script>
+		<script src="../licode_assets/js/bootstrap.min.js"></script>
+		<script src="../licode_assets/js/application.js"></script>
+		<script type="text/javascript" src="../javascripts/erizo.js"></script>
+		<script type="text/javascript" src="../javascripts/demoTemplate.js"></script>
+		<script type="text/javascript" src="../javascripts/videoconference.js"></script>
+	</head>
+
+	<body data-spy="scroll" data-target=".bs-docs-sidebar" data-twttr-rendered="true">
+		<a id="github_button" href="https://github.com/cdedios/LiquidGalaxyVideoConference" class="visible-desktop"><img style="position: fixed; top: 0; right: 0; border: 0; z-index: 1031" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+		<div id="container_demo" class="container">
+			<div class="row">
+				<div id="chat" class="span3 visible-desktop">
+					<div id="chat_body" ></div>
+					<input id="chat_message" name="mensaje" rows="1" placeholder="Chat message">
+				</div>
+			</div>
+			<div class="modal" id="connection_panel">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close close_button" aria-hidden="true">&times;</button>
+							<h4 class="modal-title">Connect to the video-conference</h4>
+						</div>
+						<div class="modal-body">
+							<p>Please, enter your name:</p>
+							<input type="text" id="username_txt" placeholder="Username">
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default  close_button">Cancel</button>
+							<button id="connect_button" type="button" class="btn btn-primary">Connect</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</body>
+</html>

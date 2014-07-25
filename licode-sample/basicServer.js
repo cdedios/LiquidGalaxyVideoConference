@@ -56,14 +56,6 @@ N.API.getRooms(function(roomlist) {
     }
 });
 
-app.get('/touchscreen', function(req, res) {
-    res.render("touchscreen.html");
-});
-
-app.get('/lg', function(req, res) {
-    res.render("lg.html"); 
-});
-
 app.get('/getRooms/', function(req, res) {
     "use strict";
     N.API.getRooms(function(rooms) {
