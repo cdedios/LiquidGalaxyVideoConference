@@ -4,21 +4,24 @@ DEMO.init_demo = function (my_name) {
 
   // var screen = getParameterByName("screen");
   var screen = "";
-  role = "";
-  localStream = function () {
-    var pathArray = window.location.pathname.split( '/' )[1];
-    console.log(pathArray);
+  //var LG_nodes = window.location.search.substring(7);
 
-    if (pathArray == "touchscreen"){
-      role = "touchscreen";
+  var lg_id = getURLParameter('lg_id');
+  var lg_nodes = getURLParameter('lg_nodes');
+  console.log("lg_id:  "+lg_id+"lg_nodes:  "+lg_nodes);
+
+  localStream = function () {
+    role = window.location.pathname.split( '/' )[1];   
+
+    if (role == "touchscreen"){
       return Erizo.Stream({audio: true, video: true, data: true, screen: screen, attributes: {name: my_name, role: role}});
-    }else if(pathArray == "lg"){
-      role = "lg";
-      return Erizo.Stream({audio: false, video: false, data: false, screen: screen, attributes: {name: my_name, role: role}});  
+    }else if(role == "lg"){
+      return Erizo.Stream({audio: false, video: false, data: false, screen: screen, attributes: {name: my_name, role: role}}); 
     }else{
       role = "client";
       return Erizo.Stream({audio: true, video: true, data: true, screen: screen, attributes: {name: my_name, role: role}});
     }
+    console.log("Role"+role);
   }();  
   
   DEMO.chat_stream = localStream;
@@ -29,12 +32,24 @@ DEMO.init_demo = function (my_name) {
     room = Erizo.Room({token: token});
 
     localStream.addEventListener("access-accepted", function () {
-      var subscribeToStreams = function (streams) {
+      var subscribeToStreams = function (streams, justOne) {
         for (var index in streams) {
           var stream = streams[index];
-          if (localStream.getID() !== stream.getID()) {
+          if (role == "lg"){
+            if (justOne) {
+              index =  Object.keys(room.remoteStreams).length;
+              console.log("JUSTONE index "+index+" ID "+lg_id);
+            }
+            var module = index % lg_nodes;            
+            if(localStream.getID() !== stream.getID() && lg_id == module){
+              console.log("Index: "+index+ " lg_id: "+lg_id+" Module: "+module);
+              room.subscribe(stream);
+            }
+          }else{
+            if (localStream.getID() !== stream.getID()) {
             room.subscribe(stream);
-          }
+            }
+          }                 
         }
       };
 
@@ -45,7 +60,7 @@ DEMO.init_demo = function (my_name) {
           room.publish(localStream);
           //room.publish(localStream, {maxVideoBW: 300});
         }        
-        subscribeToStreams(roomEvent.streams);
+        subscribeToStreams(roomEvent.streams, false);
       });
 
       room.addEventListener("stream-subscribed", function(streamEvent) {
@@ -69,7 +84,7 @@ DEMO.init_demo = function (my_name) {
       room.addEventListener("stream-added", function (streamEvent) {
         var streams = [];
         streams.push(streamEvent.stream);
-        subscribeToStreams(streams);
+        subscribeToStreams(streams, true);
       });
 
       room.addEventListener("stream-removed", function (streamEvent) {
@@ -174,6 +189,8 @@ var resizeGrid = function() {
               wscript.SendKeys("{F11}");
           }
       }
-    }
-    
+    }    
 } 
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+}
