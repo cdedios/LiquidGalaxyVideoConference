@@ -29,8 +29,8 @@ if (isset($_REQUEST['query']) and ($_REQUEST['query'] == 'relaunch')) {
 }elseif (isset($_REQUEST['query']) and ($_REQUEST['query'] == 'perusearue')) {
     echo "Starting peruse-a-rue";
     exec('/usr/bin/sudo -H -u lg /home/lg/bin/lg-peruse-a-rue');
-}elseif (isset($_REQUEST['query']) and ($_REQUEST['query'] == 'videoconference')) {
-    echo "Going to videoconference";
+}elseif (isset($_REQUEST['query']) and ($_REQUEST['query'] == 'videocall')) {
+    echo "Starting Video Call";
     exec('/usr/bin/sudo -H -u lg /home/lg/bin/lg-videocall');
 }
 ?>
