@@ -6,9 +6,9 @@ This is a [Google Summer of Code 2014](http://www.google-melange.com/gsoc/homepa
 
 We investigated the actual situation related to open source projects and WebRTC applications that allows you to do video-conferences and it was quite limited. Most of them allows you to do that but with Peer 2 Peer connections and that means that if we have a 5 people video-conference we will have to upload 5 times our stream and this is big trouble for the usual Internet connections that we all have. The project that we found more interesting was the one called Licode project, a project by some researchers of Universidad Politécnica de Madrid, we have chosen this one because they implemented a Multipoint Control Unit (MCU) that is 100% compatible with WebRTC standards and protocols called Erizo written in c++. And additionally they give a really friendly API called Erizo Api that configures and manages all the aspects of Erizo from the Node.js application.
 
+If you are interested on install and make this project run please feel free to take a look on the [Project wiki](https://github.com/cdedios/LiquidGalaxyVideoConference/wiki)
 
 
-![Alt text](http://full/path/to/img.jpg "Optional title")
 
 # Code Structure
 
